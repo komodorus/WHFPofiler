@@ -1,0 +1,18 @@
+{
+    "Login": "Login",
+    "Register": "Registrar",
+    "Logout": "Sair",
+    "Reset Password": "Recuperar Senha",
+    "E-Mail Address": "E-mail",
+    "Send Password Reset Link": "Enviar link de recuperação",
+    "Password": "Senha",
+    "Confirm Password": "Confirmar Senha",
+    "Remember Me": "Lembre-me",
+    "Forgot Your Password?": "Esqueceu sua senha?",
+    "Verify Your Email Address": "Confirme seu E-mail",
+    "A fresh verification link has been sent to your email address.": "Um link de verificação foi enviado ao E-mail fornecido.",
+    "Before proceeding, please check your email for a verification link.": "Antes de continuar, verifique sua caixa de E-mail.",
+    "If you did not receive the email": "Se voce não recebeu o E-mail",
+    "click here to request another": "clique aqui para requisitar outro"
+
+}
