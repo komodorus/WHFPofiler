@@ -14,4 +14,8 @@
 Auth::routes();
 
 Route::get('/', 'ProfileController@index');
-Route::get('/profile', 'ProfileController@show');
+
+Route::get('/profile', 'ProfileController@show')->name('profile');
+Route::patch('/profile/{id}', 'ProfileController@update')->name('profile.update');
+
+Route::post('profile/image', 'ImageController@store');

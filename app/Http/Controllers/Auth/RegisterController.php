@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Carbon;
+use App\Libraries\ImageUploader;
 
 class RegisterController extends Controller
 {
@@ -49,11 +50,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'birthday' => ['required', 'data'],
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'cpf' => ['required', 'formato_cpf', 'cpf', 'unique:users']
         ]);
     }
@@ -66,12 +69,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        // dd($data['picture']->path());
+
+        $pictureUrl = ImageUploader::save($data['picture']);
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'birthday' => Carbon::createFromFormat('d/m/Y', $data['birthday']),
             'cpf' => $data['cpf'],
-            'picture' => 'name',
+            'picture' => $pictureUrl,
             'password' => Hash::make($data['password']),
         ]);
     }

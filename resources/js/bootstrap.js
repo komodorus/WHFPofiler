@@ -1,4 +1,6 @@
 
+import jQuery from "jquery";
+
 window._ = require('lodash');
 
 /**
@@ -9,7 +11,8 @@ window._ = require('lodash');
 
 try {
     window.Popper = require('popper.js').default;
-    window.$ = window.jQuery = require('jquery');
+    // window.$ = window.jQuery = require('jquery');
+    window.$ = window.jQuery = jQuery;
 
     require('bootstrap');
 } catch (e) {}

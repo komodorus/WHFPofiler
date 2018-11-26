@@ -1,6 +1,8 @@
 <?php
 
+use App\User;
 use Illuminate\Http\Request;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/profiles', function(){
+    // return datatables(User::select('*')->get());
+    return datatables(User::select('name', 'email', 'birthday', 'cpf', 'active')->get());
 });
