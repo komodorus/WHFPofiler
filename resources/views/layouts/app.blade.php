@@ -34,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <a href="{{ route('register') }}" class="btn btn-success d-inline">Registrar</a>
+                        <a href="{{ route('register') }}" class="btn btn-success d-inline">Registrar <i class="fa fa-user-plus fa-fw ml-1" aria-hidden="true"></i></a>
                     </ul>
 
                     {{-- <li class="nav-item">

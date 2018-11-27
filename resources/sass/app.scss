@@ -29,6 +29,12 @@
     vertical-align: middle;
 }
 
+@media screen and (max-width: 767px){
+    #navbarSupportedContent{
+        margin-top: 20px;
+    }
+}
+
 .profile-picture {
     height: 260px;
     width: 260px;
