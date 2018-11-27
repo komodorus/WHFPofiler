@@ -1,13 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- <div class="container mb-4">
-    <div class="row">
-        <div class="col text-right">
-            <a href="{{ route('register') }}" class="btn btn-success">Registrar</a>
-        </div>
-    </div>
-</div> --}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col table-responsive">
@@ -84,7 +77,6 @@
                         <label class="custom-file-label" for="picture">Escoler arquivo</label>
                     </div>
                 </div>
-                {{-- <input id="picture" type="file" class="form-control" name="picture"> --}}
             </div>
 
             <div class="form-group">
@@ -111,8 +103,10 @@
                 <button type="submit" class="btn btn-primary btn-block">
                     {{ __('Update') }}
                 </button>
+                <a href="#" id="removeProfile" class="btn btn-danger btn-block">
+                    {{ __('Delete') }}
+                </a>
             </div>
-
 
         </form>
 
@@ -145,7 +139,11 @@
                 if(el.length && index != 'picture'){
                     $(el[0]).val(value)                
                 }
+                
+                $('#removeProfile').prop('href', base_url + '/profile/destroy/' + user.id );
+
             })
+
         });
 
         $('.switch').on('click', 'input[type="checkbox"]' ,function(){
