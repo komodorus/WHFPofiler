@@ -12,7 +12,9 @@ class ImageUploader
         $image_mime = $uploadedImage->getmimeType();
         $image_org = $uploadedImage->getClientOriginalName();
 
-        $client = new Client();
+        $client = new Client(['defaults' => [
+            'verify' => false
+        ]]);
 
         $response = $client->post(env('WHFIMG_API_URL', 'http://whf-api.test/image'), [
             'multipart' => [
