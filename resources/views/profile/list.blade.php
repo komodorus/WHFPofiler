@@ -55,63 +55,32 @@
             
             <div class="form-group">
                 <label for="name">{{ __('Name') }}</label>
-                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" required autofocus>
-                @if ($errors->has('name'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('name') }}</strong>
-                    </span>
-                @endif
+                <input id="name" type="text" class="form-control" name="name" required autofocus>
             </div>
 
             <div class="form-group">
                 <label for="email">{{ __('E-Mail Address') }}</label>
-                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" required>
-                @if ($errors->has('email'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('email') }}</strong>
-                    </span>
-                @endif
+                <input id="email" type="email" class="form-control" name="email" required>
             </div>
 
             <div class="form-group">
                 <label for="email">{{ __('Profile Picture') }}</label>
-                <input id="picture" type="file" class="form-control{{ $errors->has('picture') ? ' is-invalid' : '' }}" name="picture">
-                @if ($errors->has('picture'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('picture') }}</strong>
-                    </span>
-                @endif
+                <input id="picture" type="file" class="form-control" name="picture">
             </div>
 
             <div class="form-group">
                 <label for="birthday">{{ __('Date of Birth') }}</label>
-                <input id="birthday" type="text" class="form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}" name="birthday" required>
-                @if ($errors->has('birthday'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('birthday') }}</strong>
-                    </span>
-                @endif
-
+                <input id="birthday" type="text" class="form-control" name="birthday" required>
             </div>
 
             <div class="form-group">
                 <label for="cpf">{{ __('CPF') }}</label>
-                <input id="cpf" type="text" class="form-control{{ $errors->has('cpf') ? ' is-invalid' : '' }}" name="cpf" required>
-                @if ($errors->has('cpf'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('cpf') }}</strong>
-                    </span>
-                @endif
+                <input id="cpf" type="text" class="form-control" name="cpf" required>
             </div>
 
             <div class="form-group">
                 <label for="password">{{ __('Password') }}</label>
-                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
-                @if ($errors->has('password'))
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                @endif
+                <input id="password" type="password" class="form-control" name="password">
             </div>
 
             <div class="form-group">
@@ -142,6 +111,7 @@
 @section('scripts')
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.min.js"></script>
     <script>
     $(document).ready(function(){
         $('#profileEditModal').on('show.bs.modal', function (event) {
@@ -156,7 +126,6 @@
                 if(el.length && index != 'picture'){
                     $(el[0]).val(value)                
                 }
-                
             })
         })
 
@@ -165,7 +134,12 @@
                 url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
             },
             lengthMenu: [ [5, 15, 25, -1], [5, 15, 25, "Todos"] ],
+            stateSave: true
         });
+
+        $('#cpf').mask('000.000.000-00', {reverse: true});
+        $('#birthday').mask('00/00/0000');
+
     });
 
     </script>

@@ -17,5 +17,6 @@ Route::get('/', 'ProfileController@index');
 
 Route::get('/profile', 'ProfileController@show')->name('profile');
 Route::patch('/profile/{id}', 'ProfileController@update')->name('profile.update');
+Route::post('/toggle-active/{user}', 'ProfileController@toggleActive')->name('profile.toggleActive');
 
 Route::post('profile/image', 'ImageController@store');

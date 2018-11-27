@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \App\User;
+use Illuminate\Support\Carbon;
+use App\Libraries\ImageUploader;
 
 class ProfileController extends Controller
 {
@@ -75,6 +77,17 @@ class ProfileController extends Controller
         //
     }
 
+    public function toggleActive(User $user){
+        $status = $user->active;
+
+        $user->active = !$status;
+        $user->save();
+
+        return response()->json([
+            $user
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -84,24 +97,41 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // 'name' => ['required', 'string', 'max:255'],
+        // 'email'  => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        // 'password'  => ['required', 'string', 'min:6', 'confirmed'],
+        // 'birthday'  => ['required', 'data'],
+        // 'picture'  =>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048' ,
+        // 'cpf'  => ['required', 'formato_cpf', 'cpf', 'unique:users']
         
+        // dd($request->all());
+        
+
         $this->validate($request, [
-            'name' => 'string|max:255',
-            'email' => 'string|email|max:255|unique:users',
-            'password' => 'string|min:6|confirmed',
-            'birthday' => 'data',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',
+            'password' => 'string|nullable|min:6|confirmed',
+            'birthday' => 'required|data',
             'picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'cpf' => 'formato_cpf|cpf|unique:users'
+            'cpf' => 'required|formato_cpf|cpf'
         ]);
-        
+
         $user = User::find($id);
-            
+
+        if($request->hasFile('picture')){
+            $user->picture = ImageUploader::save($request->file('picture'));
+        }
+
+        if(!!$request->password){
+            $user->password = bcrypt($request->password);
+        }
+        
         $user->name = $request->name;
         $user->email = $request->email;
         $user->birthday = Carbon::createFromFormat('d/m/Y', $request->birthday);
         $user->cpf = $request->cpf;
-        $user->password = bcrypt($request->password);
-        return $user->save();
+        $user->save();
+        return redirect()->back()->with('success', 'Registro atualizado com sucesso.');
 
     }
 

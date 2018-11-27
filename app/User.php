@@ -30,4 +30,8 @@ class User extends Authenticatable
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at', 'birthday', 'email_verified_at'];
 
+    protected $casts = [
+        'birthday' => 'datetime:d/m/Y',
+    ];
+
 }

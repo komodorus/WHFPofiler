@@ -6,11 +6,11 @@ use GuzzleHttp\Client;
 
 class ImageUploader
 {
-    static public function save($path){
+    static public function save($uploadedImage){
 
-        $image_path = $path->getPathname();
-        $image_mime = $path->getmimeType();
-        $image_org = $path->getClientOriginalName();
+        $image_path = $uploadedImage->getPathname();
+        $image_mime = $uploadedImage->getmimeType();
+        $image_org = $uploadedImage->getClientOriginalName();
 
         $client = new Client();
 

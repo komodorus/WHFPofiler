@@ -12,11 +12,13 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
     <div id="app">
@@ -35,17 +37,18 @@
 
                     </ul>
 
+                    {{-- <li class="nav-item">
+                        @if (Route::has('register'))
+                            <a class="nav-link btn btn-success py-1 text-white" href="{{ route('register') }}">{{ __('Register') }} <i class="fa fa-user-plus ml-2" aria-hidden="true"></i></a>
+                        @endif
+                    </li> --}}
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto align-items-center">
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                @if (Route::has('register'))
-                                    <a class="nav-link btn btn-success py-1 text-white" href="{{ route('register') }}">{{ __('Register') }} <i class="fa fa-user-plus ml-2" aria-hidden="true"></i></a>
-                                @endif
                             </li>
                         @else
                             <li class="nav-item dropdown">
@@ -82,6 +85,23 @@
         var base_url = "{{ env('APP_URL') }}";
     </script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <script>
+                toastr.error("{{ $error }}", {
+                    "progressBar": true
+                })
+            </script>
+        @endforeach
+    @endif
+    @if(session('success'))
+        <script>
+            toastr.success("{{ session('success') }}", {
+                "progressBar": true
+            })
+        </script>
+    @endif
     @yield('scripts')
 </body>
 </html>
