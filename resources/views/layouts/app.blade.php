@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Profiler') }}</title>
+    <title>{{ config('app.name', 'WHFProfiler') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}" >
 
 </head>
 <body>
@@ -33,8 +33,8 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
+                    <ul class="navbar-nav ml-auto">
+                        <a href="{{ route('register') }}" class="btn btn-success d-inline">Registrar</a>
                     </ul>
 
                     {{-- <li class="nav-item">
@@ -81,25 +81,47 @@
         </main>
     </div>
     <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
     <script>
         var base_url = "{{ env('APP_URL') }}";
+        
+        // updating the file input's label with the file name
+
+        $('#picture').on('change',function(){
+            var fileName = $(this).val();
+            $(this).next('.custom-file-label').html(fileName);
+        })
+
     </script>
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-left",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
     @if ($errors->any())
         @foreach ($errors->all() as $error)
             <script>
-                toastr.error("{{ $error }}", {
-                    "progressBar": true
-                })
+                toastr.error("{{ $error }}")
             </script>
         @endforeach
     @endif
     @if(session('success'))
         <script>
-            toastr.success("{{ session('success') }}", {
-                "progressBar": true
-            })
+            toastr.success("{{ session('success') }}")
         </script>
     @endif
     @yield('scripts')

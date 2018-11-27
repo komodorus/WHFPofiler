@@ -1,12 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+{{-- <div class="container mb-4">
+    <div class="row">
+        <div class="col text-right">
+            <a href="{{ route('register') }}" class="btn btn-success">Registrar</a>
+        </div>
+    </div>
+</div> --}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col table-responsive">
             <table id="listUsers" class="table table-striped table-borderless" style="width:100%">
                 <thead>
                     <tr>
+                        <th>Foto</th>
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Data de Nascimento</th>
@@ -18,13 +26,18 @@
                 <tbody>
                     @foreach ($users as $user)
                         <tr>
+                            <td>
+                                <a href="{{ $user->picture }}" data-lightbox="{{ $user->id }}" data-title="{{ $user->name }}">
+                                    <div class="card-img-top profile-picture-list" style="background-image: url('{{ $user->picture }}')"></div>
+                                </a>
+                            </td>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->birthday->format('d/m/Y') }}</td>
                             <td>{{ $user->cpf }}</td>
                             <td>
                                 <label class="switch">
-                                    <input type="checkbox" {{ $user->active ? 'checked' : '' }}>
+                                    <input data-user="{{ $user->id }}" type="checkbox" {{ $user->active ? 'checked' : '' }}>
                                     <span class="slider round"></span>
                                 </label>
                             </td>
@@ -65,7 +78,13 @@
 
             <div class="form-group">
                 <label for="email">{{ __('Profile Picture') }}</label>
-                <input id="picture" type="file" class="form-control" name="picture">
+                <div class="input-group mb-3">
+                    <div class="custom-file">
+                        <input id="picture" type="file" class="custom-file-input form-control" name="picture">
+                        <label class="custom-file-label" for="picture">Escoler arquivo</label>
+                    </div>
+                </div>
+                {{-- <input id="picture" type="file" class="form-control" name="picture"> --}}
             </div>
 
             <div class="form-group">
@@ -127,6 +146,21 @@
                     $(el[0]).val(value)                
                 }
             })
+        });
+
+        $('.switch').on('click', 'input[type="checkbox"]' ,function(){
+            var toggler = $(this);
+            var user = toggler.data('user');
+            var checked = toggler.prop("checked");
+        
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.post(base_url + '/toggle-active/' + user, function(data, status){
+                checked ? toastr.success("Perfil ativado") : toastr.error("Perfil desativado")
+            });
         })
 
         $('#listUsers').DataTable({
@@ -134,7 +168,7 @@
                 url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Portuguese-Brasil.json"
             },
             lengthMenu: [ [5, 15, 25, -1], [5, 15, 25, "Todos"] ],
-            stateSave: true
+            stateSave: true,
         });
 
         $('#cpf').mask('000.000.000-00', {reverse: true});

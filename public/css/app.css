@@ -4306,6 +4306,14 @@ input[type="button"].btn-block {
   content: "Browse";
 }
 
+.custom-file-input:lang(es) ~ .custom-file-label::after {
+  content: "Elegir";
+}
+
+.custom-file-input:lang(pt) ~ .custom-file-label::after {
+  content: "Pesquisar";
+}
+
 .custom-file-label {
   position: absolute;
   top: 0;
@@ -10470,6 +10478,24 @@ a.text-dark:focus {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.profile-picture-list {
+  height: 75px;
+  width: 75px;
+  max-width: 100%;
+  margin: 0 auto;
+  border: 2px solid #e0e0e0;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  -webkit-box-shadow: 0px 0px 20px 0px rgba(70, 70, 70, 0.4);
+          box-shadow: 0px 0px 20px 0px rgba(70, 70, 70, 0.4);
+  background-repeat: no-repeat;
+}
+
+#listUsers tbody td {
+  vertical-align: middle;
 }
 
 .profile-picture {

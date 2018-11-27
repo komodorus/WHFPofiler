@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use \App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Libraries\ImageUploader;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -123,7 +124,12 @@ class ProfileController extends Controller
         }
 
         if(!!$request->password){
+            
             $user->password = bcrypt($request->password);
+            
+            if(auth()->user()->id == $user->id){
+                Auth::logout();
+            }
         }
         
         $user->name = $request->name;
